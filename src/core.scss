@@ -1,0 +1,159 @@
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: "Roboto", "Helvetica Neue", "sans-serif";
+}
+* {
+    outline: none !important;
+}
+
+// Cambia el color de fondo que deja el autofill en inputs.
+// Ref: https://stackoverflow.com/questions/2781549/removing-input-background-colour-for-chrome-autocomplete/29350537#29350537.
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+// Estilo personalizado de input.
+mat-form-field.at-form-field.mat-form-field-appearance-outline {
+    // Estilos para achicar campos que no tienen label.
+    &:not(.mat-form-field-has-label) {
+        .mat-form-field-wrapper {
+            @apply pb-1;
+            .mat-form-field-infix {
+                @apply border-t-4;
+
+                .mat-select-arrow-wrapper {
+                    @apply transform translate-y-0;
+                }
+            }
+        }
+    }
+    // Estilos para campo con errores
+    &.mat-form-field-invalid {
+        &.mat-focused,
+        &:hover {
+            .mat-form-field-flex {
+                .mat-form-field-outline,
+                .mat-form-field-label {
+                    @apply text-red-500;
+                }
+            }
+        }
+        .mat-form-field-outline-thick {
+            @apply bg-red-500;
+        }
+    }
+    // Estilos para campo sin errores
+    &:not(.mat-form-field-invalid) {
+        // Color default
+        &:not([color]) {
+            &.mat-focused,
+            &:hover {
+                .mat-form-field-flex {
+                    .mat-form-field-outline,
+                    .mat-form-field-label {
+                        @apply text-primary;
+                    }
+                }
+            }
+            .mat-form-field-outline-thick {
+                @apply bg-black;
+            }
+        }
+        // Verde
+        &[color="green"] {
+            &.mat-focused,
+            &:hover {
+                .mat-form-field-flex {
+                    .mat-form-field-outline,
+                    .mat-form-field-label {
+                        @apply text-green-500;
+                    }
+                }
+            }
+            .mat-form-field-outline-thick {
+                @apply bg-green-500;
+            }
+        }
+        // Indigo
+        &[color="indigo"] {
+            &.mat-focused,
+            &:hover {
+                .mat-form-field-flex {
+                    .mat-form-field-outline,
+                    .mat-form-field-label {
+                        @apply text-indigo-500;
+                    }
+                }
+            }
+            .mat-form-field-outline-thick {
+                @apply bg-indigo-500;
+            }
+        }
+        // Naranja
+        &[color="orange"] {
+            &.mat-focused,
+            &:hover {
+                .mat-form-field-flex {
+                    .mat-form-field-outline,
+                    .mat-form-field-label {
+                        @apply text-orange-500;
+                    }
+                }
+            }
+            .mat-form-field-outline-thick {
+                @apply bg-orange-500;
+            }
+        }
+        // Azul
+        &[color="blue"] {
+            &.mat-focused,
+            &:hover {
+                .mat-form-field-flex {
+                    .mat-form-field-outline,
+                    .mat-form-field-label {
+                        @apply text-blue-500;
+                    }
+                }
+            }
+            .mat-form-field-outline-thick {
+                @apply bg-blue-500;
+            }
+        }
+    }
+    .mat-form-field-wrapper {
+        .mat-form-field-flex {
+            .mat-form-field-outline-thick {
+                @apply opacity-100 bg-opacity-5;
+            }
+            .mat-form-field-outline {
+                @apply text-transparent;
+                @apply rounded-md;
+            }
+
+            .mat-form-field-outline-gap {
+                border-top-color: currentColor !important;
+            }
+
+            .mat-form-field-infix {
+                @apply pt-3 pb-2;
+                .mat-form-field-label-wrapper {
+                    top: -0.2em !important;
+                    padding-top: 0.2em !important;
+                }
+            }
+        }
+    }
+}
+.mat-form-field-infix {
+    width: auto !important;
+}
+.mat-option {
+    @apply leading-10 h-10 #{!important};
+}

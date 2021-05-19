@@ -1,0 +1,5 @@
+.paises-form-panel {
+    & > mat-dialog-container {
+        @apply p-0;
+    }
+}

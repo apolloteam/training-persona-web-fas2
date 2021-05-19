@@ -1,0 +1,303 @@
+<!-- Barra de progreso. -->
+<div class="h-1">
+    <mat-progress-bar *ngIf="loading"
+                      class="rounded-t"
+                      color="primary"
+                      mode="indeterminate"></mat-progress-bar>
+</div>
+
+<div class="flex flex-row justify-center">
+    <mat-card class="m-4 max-w-4xl w-full">
+        <form [formGroup]="formPersona"
+              (ngSubmit)="!loading && submitForm()">
+
+
+            <!-- Campos del formulario. -->
+            <section class="flex flex-col">
+
+                <!-- Nombre. -->
+                <mat-form-field class="w-full at-form-field"
+                                color="green">
+                    <mat-label>{{'PERSONAS.FORM.NAME.LABEL' | translate}}</mat-label>
+                    <input type="text"
+                           required
+                           matInput
+                           formControlName="fullName"
+                           class="text-3xl" />
+                    <mat-error *ngIf="formPersona.controls.fullName.errors?.required">
+                        {{'PERSONAS.FORM.NAME.ERROR' | translate}} </mat-error>
+                    <mat-hint>{{'PERSONAS.FORM.NAME.HINT' | translate}}</mat-hint>
+                </mat-form-field>
+
+                <!-- Email. -->
+                <mat-form-field class="at-form-field w-full">
+                    <mat-label>{{'PERSONAS.FORM.EMAIL.LABEL' | translate}}</mat-label>
+                    <input type="text"
+                           matInput
+                           required
+                           formControlName="email" />
+                    <mat-error *ngIf="formPersona.controls.email.errors?.required">
+                        {{'PERSONAS.FORM.EMAIL.ERROR' | translate}} </mat-error>
+                </mat-form-field>
+
+                <!-- Ahorro. -->
+                <div class="flex flex-col tablet:flex-row tablet:items-center">
+                    <div class="flex flex-col tablet:flex-1 tablet:pr-4">
+                        <div class="flex flex-col tablet:flex-row">
+
+                            <!-- Cantidad Ahorro. -->
+                            <mat-form-field class="at-form-field tablet:flex-1 tablet:pr-4">
+                                <mat-label>{{'PERSONAS.FORM.SAVING.LABEL' | translate}}</mat-label>
+                                <input matInput
+                                       type="number"
+                                       formControlName="saving" />
+                            </mat-form-field>
+
+                            <!-- Porcentaje Ahorro. -->
+                            <div class="flex flex-row items-center tablet:flex-1 relative">
+                                <mat-form-field class="at-form-field flex-1 pr-4">
+                                    <mat-label>{{'PERSONAS.FORM.SAVING.QUOTE.LABEL' | translate}}</mat-label>
+                                    <input type="number"
+                                           matInput
+                                           min="0"
+                                           max="99"
+                                           formControlName="savingQuote" />
+                                </mat-form-field>
+                                <mat-icon matTooltip="{{'PERSONAS.FORM.SAVING.QUOTE.HINT' | translate }}">help_outline
+                                </mat-icon>
+                            </div>
+                        </div>
+                        <mat-hint class="text-xs ml-2 -mt-4 mb-2">{{ 'PERSONAS.FORM.SAVING.HINT' | translate }}
+                        </mat-hint>
+                    </div>
+
+                    <div class="tablet:pl-2 tablet:flex-1 tablet:self-start tablet:mt-5">
+                        <mat-slide-toggle color="primary"
+                                          formControlName="enableNotifications">
+                            {{'PERSONAS.FORM.ENABLE_NOTIFICATIONS' | translate }}
+                        </mat-slide-toggle>
+                    </div>
+
+                </div>
+
+                <!-- Dirección. -->
+                <mat-form-field class="at-form-field w-full">
+                    <mat-label>{{'PERSONAS.FORM.ADDRESS' | translate}}</mat-label>
+                    <input type="text"
+                           matInput
+                           formControlName="address" />
+                </mat-form-field>
+
+                <div class="flex flex-col tablet:flex-row">
+                    <div class="flex flex-col tablet:flex-row tablet:flex-1 tablet:pr-4">
+
+                        <!-- Fecha de nacimiento. -->
+                        <mat-form-field class="at-form-field tablet:flex-1 tablet:pr-4">
+                            <mat-label>{{'PERSONAS.FORM.DATE_OF_BIRTH' | translate}}</mat-label>
+                            <input matInput
+                                   formControlName="dateOfBirth"
+                                   [matDatepicker]="dateOfBirthPicker">
+                            <mat-datepicker-toggle matSuffix
+                                                   [for]="dateOfBirthPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #dateOfBirthPicker></mat-datepicker>
+                        </mat-form-field>
+
+                        <!-- Género. -->
+                        <mat-form-field class="at-form-field tablet:w-1/3">
+                            <mat-label>{{'PERSONAS.FORM.GENDER.LABEL' | translate}}</mat-label>
+                            <mat-select class="w-full"
+                                        formControlName="gender">
+                                <mat-option *ngFor="let itemGender of personasService.getGenders()"
+                                            [value]="itemGender">{{personasService.getTextByGender(itemGender)}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Estado. -->
+                    <div class="tablet:flex-1">
+                        <mat-form-field class="at-form-field w-full">
+                            <mat-label>{{'PERSONAS.FORM.ACCOUNT_STATUS.LABEL' | translate}}</mat-label>
+                            <mat-select formControlName="accountStatus">
+                                <mat-option *ngFor="let itemAccountStatus of personasService.getAccountStatusList()"
+                                            [value]="itemAccountStatus">
+                                    {{personasService.getTextByAccountStatus(itemAccountStatus)}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </section>
+
+            <section class="flex flex-col">
+
+                <mat-accordion multi
+                               displayMode="default">
+
+                    <!-- Datos regionales. -->
+                    <mat-expansion-panel expanded="true">
+                        <mat-expansion-panel-header class="text-lg">
+                            {{ 'PERSONAS.FORM.REGIONAL_DATA.TITLE' | translate}}
+                        </mat-expansion-panel-header>
+                        <div class="text-base">
+                            <div class="flex flex-col tablet:flex-row">
+                                <div class="flex flex-col tablet:flex-row tablet:flex-1 tablet:pr-4">
+
+                                    <!-- Formatos de fecha. -->
+                                    <mat-form-field class="at-form-field tablet:flex-1 tablet:pr-4">
+                                        <mat-label>{{'PERSONAS.FORM.DATE_FORMAT.LABEL' | translate}}</mat-label>
+                                        <mat-select formControlName="dateFormat">
+                                            <mat-option *ngFor="let itemDateFormat of personasService.getDateFormats()"
+                                                        [value]="itemDateFormat">{{itemDateFormat}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <!-- Formatos de hora. -->
+                                    <mat-form-field class="at-form-field tablet:flex-1">
+                                        <mat-label>{{'PERSONAS.FORM.TIME_FORMAT.LABEL' | translate}}</mat-label>
+                                        <mat-select formControlName="timeFormat">
+                                            <mat-option *ngFor="let itemTimeFormat of personasService.getTimeFormats()"
+                                                        [value]="itemTimeFormat">{{itemTimeFormat}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="flex flex-col tablet:flex-row tablet:flex-1">
+
+                                    <!-- Zona horaria. -->
+                                    <mat-form-field class="at-form-field tablet:flex-1">
+                                        <mat-label>{{'PERSONAS.FORM.TIME_ZONE.LABEL' | translate}}</mat-label>
+                                        <mat-select formControlName="timeZoneName">
+                                            <mat-option *ngFor="let itemTimeZone of personasService.getTimeZones();trackBy:appHelperService.trackByField('timeZoneName');"
+                                                        [value]="itemTimeZone.timeZoneName">
+                                                {{itemTimeZone.timeZoneName}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col tablet:flex-row">
+                                <div class="flex flex-row tablet:flex-1 tablet:items-center tablet:pr-4">
+
+                                    <!-- Nacionalidad. -->
+                                    <mat-form-field class="at-form-field flex-1"
+                                                    color="orange">
+                                        <mat-label>{{'PERSONAS.FORM.NATIONALITY.LABEL' | translate}}</mat-label>
+                                        <mat-select formControlName="nationality">
+                                            <mat-option *ngFor="let itemPais of (paises$ | async);trackBy:appHelperService.trackByField('codigoIata')"
+                                                        [value]="itemPais.nombre">{{itemPais.nombre}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <!-- Botón para agregar países. -->
+                                    <button (click)="createPais()"
+                                            type="button"
+                                            mat-icon-button>
+                                        <mat-icon>add_circle_outline</mat-icon>
+                                    </button>
+
+                                </div>
+
+                                <div class="tablet:flex-1">
+                                    <!-- Idioma. -->
+                                    <mat-form-field class="at-form-field w-full tablet:w-1/2">
+                                        <mat-label>{{'PERSONAS.FORM.LANG.LABEL' | translate}}</mat-label>
+                                        <mat-select formControlName="lang">
+                                            <mat-option *ngFor="let itemLang of personasService.getLanguageCodes()"
+                                                        [value]="itemLang">{{itemLang}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="flex flex-col tablet:flex-row tablet:items-center">
+                                <mat-checkbox class="tablet:mr-4"
+                                              [checked]="true">Zona horaria por default</mat-checkbox>
+
+                                <!-- Zona horaria (prueba) -->
+                                <mat-form-field class="at-form-field tablet:mr-4 tablet:flex-1">
+                                    <mat-select formControlName="timeZoneName">
+                                        <mat-option *ngFor="let itemTimeZone of personasService.getTimeZones();trackBy:appHelperService.trackByField('timeZoneName');"
+                                                    [value]="itemTimeZone.timeZoneName">
+                                            {{itemTimeZone.timeZoneName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <span>Todo el día</span>
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+
+                    <!-- Bienes. -->
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header class="text-lg"> {{ 'PERSONAS.FORM.BIENES.LABEL' | translate }}
+                        </mat-expansion-panel-header>
+                        <div class="flex flex-col text-base">
+                            <mat-card class="my-1"
+                                      *ngFor="let itemBien of bienes; trackBy:appHelperService.trackByField('id');">
+                                <div class="flex flex-row text-sm items-center">
+                                    <span class="flex-1">{{itemBien.descripcion}}</span>
+                                    <span class="flex-1">{{itemBien.tipo}}</span>
+                                    <span class="flex-1">{{itemBien.valor | currency}}</span>
+                                    <button mat-icon-button
+                                            type="button"
+                                            (click)="deleteBien(itemBien.id)">
+                                        <mat-icon>delete_forever</mat-icon>
+                                    </button>
+                                </div>
+                            </mat-card>
+                            <span *ngIf="!bienes?.length"
+                                  class="text-sm mx-4">{{ 'PERSONAS.FORM.BIENES.EMPTY' |
+                                translate}}</span>
+                            <button mat-button
+                                    class="self-start flex flex-row items-center mt-4"
+                                    type="button"
+                                    color="primary"
+                                    (click)="addBien()">
+                                <mat-icon class="mr-2">add_circle_outline</mat-icon>
+                                <span>{{ 'PERSONAS.FORM.BIENES.ADD_BTN' | translate}}</span>
+                            </button>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </section>
+
+            <section class="flex flex-col mt-4">
+                <!-- Observaciones. -->
+                <mat-form-field class="at-form-field w-full">
+                    <mat-label>{{ 'PERSONAS.FORM.NOTES.LABEL' | translate }}</mat-label>
+                    <textarea matInput
+                              #notes
+                              formControlName="notes"
+                              maxlength="500"></textarea>
+                    <mat-hint align="end">{{notes.value.length}} / 500</mat-hint>
+                </mat-form-field>
+            </section>
+
+            <section class="flex flex-row justify-end">
+                <button mat-button
+                        class="mr-4"
+                        (click)="cancelForm()"
+                        [disabled]="formPersona.invalid || loading">
+                    {{ 'PERSONAS.FORM.BTN.CANCEL' | translate}}
+                </button>
+                <button *ngIf="!idPersona"
+                        mat-raised-button
+                        color="primary"
+                        type="submit"
+                        [disabled]="formPersona.invalid || loading">
+                    {{ 'PERSONAS.FORM.BTN.CREATE' | translate}}
+                </button>
+                <button *ngIf="idPersona"
+                        mat-raised-button
+                        color="primary"
+                        type="submit"
+                        [disabled]="formPersona.invalid || loading">
+                    {{ 'PERSONAS.FORM.BTN.UPDATE' | translate}}
+                </button>
+            </section>
+        </form>
+    </mat-card>
+</div>

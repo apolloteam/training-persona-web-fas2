@@ -1,0 +1,223 @@
+{
+    "MASTER_PAGE": {
+        "TITLE": "Personas",
+        "NAV": {
+            "PERSONA_LIST": "Listado de personas",
+            "PAIS_LIST": "Listado de países",
+            "LOGOUT": "Cerrar sesión",
+            "VERSION": "Versión"
+        }
+    },
+    "AUTH": {
+        "LOGIN": {
+            "TITLE": "Ingrese sus credenciales",
+            "USERNAME": {
+                "LABEL": "Nombre de usuario",
+                "ERROR": {
+                    "REQUIRED": "Debe ingresar el nombre de usuario."
+                }
+            },
+            "PASSWORD": {
+                "LABEL": "Contraseña",
+                "ERROR": {
+                    "REQUIRED": "Debe ingresar la contraseña."
+                }
+            },
+            "BTN": "Ingresar",
+            "ERROR": {
+                "CREDENTIALS": "Las credenciales ingresadas son incorrectas. Por favor, intente nuevamente.",
+                "PRIVILEGES": "Su cuenta no tiene privilegios para acceder al sistema.",
+                "INACTIVE_ACCOUNT": "La cuenta de su empresa se encuentra inactiva. Por favor, contáctese con nosotros para que le demos más información."
+            }
+        }
+    },
+    "PERSONAS": {
+        "LIST": {
+            "TITLE": "Lista de personas",
+            "LOADING": "Buscando personas...",
+            "ACTIONS": {
+                "CREATE": "Nueva",
+                "EDIT": "Actualizar",
+                "DELETE": "Eliminar"
+            },
+            "DELETE_WARNING": "¿Está seguro que quiere eliminar esta Persona?",
+            "ITEM": {
+                "NAME": "Nombre",
+                "EMAIL": "Email",
+                "OBS": "Observaciones",
+                "SAVING": "Ahorro",
+                "SAVING_QUOTE": {
+                    "LABEL": "Porcentaje",
+                    "HINT": "Ingrese el total de ahorro y el porcentaje en relación a su ingreso mensual."
+                }
+            },
+            "ERROR": {
+                "DELETE_NOT_FOUND": "La Persona que quiere eliminar ya no figura en el sistema."
+            }
+        },
+        "STATUS": {
+            "ACTIVE": "Activo",
+            "INACTIVE": "Inactivo",
+            "DELETED": "Eliminado",
+            "SUSPENDED": "Suspendido",
+            "UNKNOWN": "Desconocido"
+        },
+        "FORM": {
+            "NAME": {
+                "LABEL": "Nombre completo",
+                "HINT": "Con el siguiente formato Apellido, Nombre/s.",
+                "ERROR": "Debe ingresar el nombre completo."
+            },
+            "EMAIL": {
+                "LABEL": "Correo electrónico",
+                "ERROR": "Debe ingresar el nombre completo."
+            },
+            "SAVING": {
+                "LABEL": "Ahorro",
+                "QUOTE": {
+                    "LABEL": "Porcentaje",
+                    "HINT": "Porcentaje en relación a su ingreso mensual."
+                },
+                "HINT": "Ingrese el total de ahorro y el porcentaje en relación a su ingreso mensual."
+            },
+            "ENABLE_NOTIFICATIONS": "Recibir notificaciones.",
+            "ADDRESS": "Direccion",
+            "DATE_OF_BIRTH": "Fecha de nacimiento",
+            "GENDER": {
+                "LABEL": "Sexo",
+                "MALE": "Masculino",
+                "FEMALE": "Femenino",
+                "UNSPECIFIED": "Sin especificar"
+            },
+            "ACCOUNT_STATUS": {
+                "LABEL": "Estado"
+            },
+            "REGIONAL_DATA": {
+                "TITLE": "Datos regionales"
+            },
+            "DATE_FORMAT": {
+                "LABEL": "Formato de fecha"
+            },
+            "TIME_FORMAT": {
+                "LABEL": "Formato de hora"
+            },
+            "TIME_ZONE": {
+                "LABEL": "Zona horaria"
+            },
+            "NATIONALITY": {
+                "LABEL": "Nacionalidad"
+            },
+            "LANG": {
+                "LABEL": "Idioma"
+            },
+            "BIENES": {
+                "LABEL": "Bienes",
+                "ADD_BTN": "Agregar bien",
+                "EMPTY": "No posee bienes"
+            },
+            "NOTES": {
+                "LABEL": "Observaciones"
+            },
+            "BTN": {
+                "CANCEL": "Cancelar",
+                "CREATE": "Ingresar",
+                "UPDATE": "Actualizar"
+            },
+            "SUCCESS": "La Persona ha sido cargada correctamente.",
+            "ERROR": {
+                "EMAIL_EXIST": "Este correo electrónico ya existe. Ingrese otro correo electrónico.",
+                "PRUEBA_NOTES": "Elimine la palabra prueba para dejar de similar este error."
+            }
+        }
+    },
+    "PAISES": {
+        "LIST": {
+            "TITLE": "Lista de países",
+            "EXPORT": "Exportar",
+            "LOADING": "Buscando países...",
+            "IATA_CODE": {
+                "HEADER": "IATA"
+            },
+            "NOMBRE": {
+                "HEADER": "Nombre"
+            },
+            "DELETE": {
+                "MESSAGE": "¿Está seguro que quiere eliminar este País?",
+                "ERROR": "El País que quiere eliminar ya no figura en el sistema o es el país por default."
+            }
+        },
+        "FORM": {
+            "TITLE": "País",
+            "NAME": {
+                "LABEL": "Nombre",
+                "ERROR": {
+                    "REQUIRED": "Debe ingresar el nombre del país."
+                }
+            },
+            "IATA": {
+                "LABEL": "Código IATA",
+                "ERROR": {
+                    "REQUIRED": "Ingrese el código IATA."
+                }
+            },
+            "ERROR": {
+                "IATA_EXIST": "Ya existe un país con el código IATA ingresado."
+            },
+            "BTN": {
+                "CANCEL": "Cancelar",
+                "CREATE": "Agregar",
+                "EDIT": "Actualizar"
+            }
+        }
+    },
+    "BIENES": {
+        "FORM": {
+            "TITLE": "Agregar bien",
+            "DESCRIPCION": {
+                "LABEL": "Descripción",
+                "ERROR": {
+                    "REQUIRED": "Ingrese la descripción."
+                }
+            },
+            "TIPO": {
+                "LABEL": "Categoría",
+                "ERROR": {
+                    "REQUIRED": "Debe ingresar la categoría."
+                }
+            },
+            "VALOR": {
+                "LABEL": "Valor"
+            },
+            "BTN": {
+                "CANCEL": "Cancelar",
+                "CREATE": "Agregar",
+                "EDIT": "Actualizar"
+            }
+        }
+    },
+    "PAGINATOR": {
+        "PREV": "Anterior",
+        "NEXT": "Siguiente",
+        "FIRST_PAGE": "Primera",
+        "LAST_PAGE": "Última",
+        "PAGE_SIZE": "Resultados por página",
+        "OF": "de"
+    },
+    "ERROR": {
+        "TITLE": "Se ha producido un error",
+        "MESSAGE": "Se ha producido un error inesperado, por favor, envíe el siguiente código al soporte técnico. ({{code}} id:{{uiErrorUniqueId}})",
+        "NOT_FOUND": {
+            "TITLE": "Se ha producido un error",
+            "MESSAGE": "No se pudo encontrar el recurso solicitado. Por favor contáctese con el área de sistemas."
+        },
+        "RUNTIME": {
+            "TITLE": "Se ha producido un error",
+            "MESSAGE": "Se ha producido un error de ejecución inesperado. Por favor, envíe el siguiente código al soporte técnico"
+        }
+    },
+    "YES": "Sí",
+    "NO": "No",
+    "ACCEPT": "Aceptar",
+    "CANCEL": "Cancelar",
+    "CLOSE": "Cerrar"
+}

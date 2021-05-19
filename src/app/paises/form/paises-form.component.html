@@ -1,0 +1,68 @@
+<!-- Barra de progreso. -->
+<div class="h-1">
+    <mat-progress-bar *ngIf="loading"
+                      class="rounded-t"
+                      color="primary"
+                      mode="indeterminate"></mat-progress-bar>
+</div>
+
+<div class="p-6">
+    <h4 class="text-lg mb-2">
+        {{'PAISES.FORM.TITLE' | translate}}
+    </h4>
+
+    <form [formGroup]="formPais"
+          (ngSubmit)="formPais.valid && !loading && submit()">
+
+        <!-- Campos del formulario. -->
+        <section class="flex flex-col">
+            <div class="flex flex-col tablet:flex-row">
+                <!-- Nombre. -->
+                <mat-form-field class="at-form-field tablet:flex-1 tablet:pr-4">
+                    <mat-label>{{ 'PAISES.FORM.NAME.LABEL' | translate }}</mat-label>
+                    <input required
+                           matInput
+                           formControlName="nombre" />
+                    <mat-error *ngIf="formPais.controls.nombre.errors?.required">
+                        {{'PAISES.FORM.NAME.ERROR.REQUIRED' | translate}} </mat-error>
+                </mat-form-field>
+
+                <!-- Código IATA. -->
+                <mat-form-field class="at-form-field tablet:flex-1">
+                    <mat-label>{{ 'PAISES.FORM.IATA.LABEL' | translate }}</mat-label>
+                    <input required
+                           matInput
+                           formControlName="codigoIata" />
+                    <mat-error *ngIf="formPais.controls.codigoIata.errors?.required">
+                        {{'PAISES.FORM.IATA.ERROR.REQUIRED' | translate}} </mat-error>
+                </mat-form-field>
+            </div>
+        </section>
+
+        <!-- Botones del formulario. -->
+        <section class="flex flex-row justify-end">
+            <button class="mr-4"
+                    mat-button
+                    type="button"
+                    [disabled]="loading"
+                    (click)="closeModal(false)">
+                {{ 'PAISES.FORM.BTN.CANCEL' | translate }}
+            </button>
+            <button *ngIf="!model"
+                    mat-raised-button
+                    color="primary"
+                    type="submit"
+                    [disabled]="formPais.invalid || loading">
+                {{ 'PAISES.FORM.BTN.CREATE' | translate }}
+            </button>
+            <button *ngIf="model"
+                    mat-raised-button
+                    color="primary"
+                    type="submit"
+                    [disabled]="formPais.invalid || loading">
+                {{ 'PAISES.FORM.BTN.EDIT' | translate }}
+            </button>
+        </section>
+
+    </form>
+</div>

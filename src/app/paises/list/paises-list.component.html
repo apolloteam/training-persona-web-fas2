@@ -1,0 +1,121 @@
+<div class="h-full p-4">
+
+    <!-- Barra de progreso. -->
+    <div class="h-1">
+        <mat-progress-bar *ngIf="!!loading"
+                          class="rounded-t"
+                          color="primary"
+                          mode="indeterminate"></mat-progress-bar>
+    </div>
+
+    <mat-card class="h-full flex flex-col px-0">
+        <div class="flex flex-row justify-between items-center p-4">
+
+            <h2 class="text-2xl">{{'PAISES.LIST.TITLE' | translate}}</h2>
+            <button mat-raised-button
+                    [disabled]="!paisesSelection.selected?.length"
+                    color="primary"
+                    (click)="export()">{{ 'PAISES.LIST.EXPORT' | translate}}</button>
+        </div>
+        <span *ngIf="loading"
+              class="block px-6 text-sm">
+            {{'PAISES.LIST.LOADING' | translate}}
+        </span>
+
+        <div class="overflow-auto flex-1">
+
+            <mat-table *ngIf="(listPaises$ | async).length"
+                       class="w-full pb-16"
+                       matSort
+                       (matSortChange)="handleSortEvent($event)"
+                       [dataSource]="listPaises$">
+
+                <!-- CONFIGURACIÓN DE COLUMNAS. -->
+
+                <!-- Columna de selección. -->
+                <ng-container matColumnDef="selection">
+                    <mat-header-cell mat-sort-header
+                                     *matHeaderCellDef
+                                     class="flex-none w-20">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                                      color="primary"
+                                      (change)="$event ? handleToggleAll($event) : null"
+                                      [checked]="isAllSelected() | async"
+                                      [indeterminate]="paisesSelection?.hasValue() && (isAllSelected() | async) === false">
+                        </mat-checkbox>
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let pais"
+                              class="flex-none w-20">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                                      color="primary"
+                                      (change)="$event ? paisesSelection?.toggle(pais.codigoIata) : null"
+                                      [checked]="paisesSelection.isSelected(pais.codigoIata)"></mat-checkbox>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Código IATA. -->
+                <ng-container matColumnDef="codigoIata">
+                    <mat-header-cell mat-sort-header
+                                     *matHeaderCellDef
+                                     class="flex-none w-20">{{'PAISES.LIST.IATA_CODE.HEADER' | translate}}
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let pais"
+                              class="flex-none w-20"> {{pais.codigoIata}} </mat-cell>
+                </ng-container>
+
+                <!-- Nombre del país. -->
+                <ng-container matColumnDef="nombre">
+                    <mat-header-cell class="flex-1 w-40"
+                                     mat-sort-header
+                                     *matHeaderCellDef>{{'PAISES.LIST.NOMBRE.HEADER' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let pais"
+                              class="flex-1 w-40"> {{pais.nombre}} </mat-cell>
+                </ng-container>
+
+                <!-- Botones de acciones. -->
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell mat-header-cell
+                                     *matHeaderCellDef
+                                     class="flex-none"></mat-header-cell>
+                    <mat-cell *matCellDef="let pais"
+                              class="flex-none">
+                        <button mat-icon-button
+                                class="text-grey-600 mr-4"
+                                (click)="editPais(pais)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button
+                                class="text-grey-600"
+                                (click)="deletePaisById(pais.codigoIata)">
+                            <mat-icon>delete_forever</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Configuración de columnas en el header. -->
+                <mat-header-row *matHeaderRowDef="columnsToDisplay, sticky: true"></mat-header-row>
+
+                <!-- Configuración de columnas en cada row. -->
+                <mat-row class="min-w-min"
+                         *matRowDef="let myRowData; columns: columnsToDisplay"></mat-row>
+
+            </mat-table>
+        </div>
+
+        <mat-paginator *ngIf="(listPaises$ | async).length"
+                       [length]="totalItemCount | async"
+                       [pageIndex]="(pageIndex | async) - 1"
+                       [pageSize]="(pageSize | async)"
+                       [pageSizeOptions]="[5, 10, 25, 100]"
+                       (page)="handlePaginatorEvent($event)">
+        </mat-paginator>
+
+        <button mat-fab
+                color="primary"
+                class="absolute right-8 bottom-20"
+                (click)="createPais()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </mat-card>
+</div>

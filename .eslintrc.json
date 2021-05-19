@@ -1,0 +1,326 @@
+{
+    "root": true,
+    "ignorePatterns": [
+        "projects/**/*"
+    ],
+    "plugins": [
+        "jsdoc",
+        "import",
+        "@typescript-eslint",
+        "rxjs"
+    ],
+    "overrides": [
+        {
+            "files": [
+                "*.ts"
+            ],
+            "parserOptions": {
+                "project": [
+                    "tsconfig.json",
+                    "e2e/tsconfig.json"
+                ],
+                "createDefaultProgram": true
+            },
+            "extends": [
+                "plugin:@angular-eslint/recommended",
+                "plugin:@angular-eslint/template/process-inline-templates",
+                "plugin:@typescript-eslint/recommended",
+                "plugin:rxjs/recommended"
+            ],
+            "rules": {
+                "@angular-eslint/component-selector": [
+                    "error",
+                    {
+                        "prefix": "app",
+                        "style": "kebab-case",
+                        "type": "element"
+                    }
+                ],
+                "@angular-eslint/directive-selector": [
+                    "error",
+                    {
+                        "prefix": "app",
+                        "style": "camelCase",
+                        "type": "attribute"
+                    }
+                ],
+                // =======================
+                // Reglas de ESLint (configuración custom).
+                "quotes": [
+                    "warn",
+                    "single"
+                ], // Comillas simples.
+                "indent": [
+                    "warn",
+                    4,
+                    {
+                        "SwitchCase": 1
+                    }
+                ], // Indentación de 4 espacios (no tabs).
+                "semi": [
+                    "warn",
+                    "always"
+                ], // Siempre ;.
+                "eol-last": [
+                    "warn",
+                    "always"
+                ], // Fin de archivo con enter.
+                "no-multiple-empty-lines": [
+                    "warn",
+                    {
+                        "max": 1,
+                        "maxEOF": 1
+                    }
+                ], // Máximo 1 línea vacía.
+                "keyword-spacing": [
+                    "error",
+                    {
+                        "before": true
+                    }
+                ],
+                // =======================
+                // Reglas de: eslint/valid-jsdoc (nativo).
+                "valid-jsdoc": [
+                    "warn",
+                    {
+                        "matchDescription": "[A-Z].*\\.",
+                        "prefer": {
+                            "arg": "param",
+                            "argument": "param",
+                            "return": "returns"
+                        },
+                        "preferType": {
+                            "Boolean": "boolean",
+                            "Number": "number",
+                            "Object": "object",
+                            "String": "string"
+                        },
+                        "requireReturn": false,
+                        "requireReturnType": false,
+                        "requireParamDescription": true,
+                        "requireReturnDescription": true,
+                        "requireParamType": false
+                    }
+                ],
+                // =======================
+                // Reglas de eslint-plugin-jsdoc: https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-line-alignment
+                "jsdoc/require-jsdoc": [
+                    "warn",
+                    {
+                        "contexts": [
+                            "TSInterfaceDeclaration",
+                            "TSMethodSignature",
+                            "TSPropertySignature"
+                        ],
+                        "publicOnly": {
+                            "ancestorsOnly": true
+                        },
+                        "require": {
+                            "ClassDeclaration": true,
+                            "ClassExpression": true,
+                            "MethodDefinition": true
+                        }
+                    }
+                ],
+                "jsdoc/require-description": [ // Requiere descripción y sin tag @description.
+                    "warn",
+                    {
+                        "descriptionStyle": "body"
+                    }
+                ],
+                "jsdoc/match-description": [ // Formato válido (Comienza con mayúsculas, termina con punto) en descrip, params y returns.
+                    "warn",
+                    {
+                        "tags": {
+                            "param": true,
+                            "returns": true
+                        }
+                    }
+                ],
+                // =======================
+                // Reglas de eslint-plugin-import: https://github.com/benmosher/eslint-plugin-import.
+                "import/no-absolute-path": [
+                    "warn",
+                    {
+                        "commonjs": false,
+                        "amd": true
+                    }
+                ], // Do not import modules using an absolute path.
+                "import/first": [
+                    "warn"
+                ], // Imports al comienzo del archivo.
+                "import/exports-last": [
+                    "warn"
+                ], // Exports al final.
+                "import/no-unassigned-import": [
+                    "warn"
+                ], // Imports sin usar.
+                // =======================
+                // Reglas de typescript-eslint: https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin
+                "@typescript-eslint/no-empty-function": [
+                    "error",
+                    {
+                        "allow": [
+                            "private-constructors"
+                        ]
+                    }
+                ], // No permite funciones vacías.
+                "@typescript-eslint/explicit-member-accessibility": [
+                    "error",
+                    {
+                        "overrides": {
+                            "constructors": "no-public"
+                        }
+                    }
+                ], // Require que se defina la accesibilidad (private/public/etc) en clases, propiedades y métodos.
+                "@typescript-eslint/no-inferrable-types": "off", // Disallows explicit type declarations for variables or parameters initialized to a number, string, or boolean.
+                "camelcase": "off", // Ver *1 al pie.
+                "@typescript-eslint/naming-convention": [ // naming-convention.
+                    "error",
+                    {
+                        "selector": "default",
+                        "format": [
+                            "camelCase"
+                        ]
+                    },
+                    {
+                        "selector": "variable",
+                        "format": [
+                            "camelCase",
+                            "UPPER_CASE"
+                        ]
+                    },
+                    {
+                        "selector": "parameter",
+                        "format": [
+                            "camelCase"
+                        ],
+                        "leadingUnderscore": "forbid"
+                    },
+                    {
+                        "selector": "memberLike",
+                        "modifiers": [
+                            "private"
+                        ],
+                        "format": [
+                            "camelCase"
+                        ],
+                        "leadingUnderscore": "forbid"
+                    },
+                    {
+                        "selector": "typeLike",
+                        "format": [
+                            "PascalCase"
+                        ]
+                    },
+                    {
+                        "selector": "enumMember",
+                        "format": [
+                            "PascalCase"
+                        ]
+                    }
+                ],
+                // Regla de @typescript-eslint que extiende la regla de eslint/brace-style por eso requiere deshabilitar la de ESLint.
+                // -- Reglas de eslint deshabilitadas ----------------------------------
+                "brace-style": "off",
+                "comma-dangle": "off",
+                "comma-spacing": "off",
+                "default-param-last": "off",
+                "func-call-spacing": "off",
+                "init-declarations": "off",
+                "no-dupe-class-members": "off",
+                "no-duplicate-imports": "off",
+                "no-redeclare": "off",
+                "no-shadow": "off",
+                "no-throw-literal": "off",
+                "no-use-before-define": "off",
+                "object-curly-spacing": "off",
+                "no-return-await": "off",
+                "space-before-function-paren": "off",
+                "space-infix-ops": "off",
+                // -- Reglas de eslint deshabilitadas ----------------------------------
+                // -- Reglas de typescript-eslint que extienden las de eslint ----------
+                "@typescript-eslint/restrict-plus-operands": [
+                    "error",
+                    {
+                        "checkCompoundAssignments": true
+                    }
+                ], // No permite, por ejemplo, '5' + 5.
+                "@typescript-eslint/type-annotation-spacing": [
+                    "error"
+                ], // Require consistent spacing around type annotations (nombre: string==>ok | nombre:string==>error).
+                "@typescript-eslint/brace-style": [
+                    "error"
+                ], // Require Brace Style.
+                "@typescript-eslint/comma-dangle": [
+                    "error"
+                ], // Fuerza a no poner la última coma si no hay un próximo elemento ([1, 2, 3]==>ok | [1, 2, 3,]==>error).
+                "@typescript-eslint/comma-spacing": [
+                    "error"
+                ], // Enforces consistent spacing before and after commas ([1, 2, 3]==>ok | [1,2,3,]==>error).
+                "@typescript-eslint/default-param-last": [
+                    "error"
+                ], // Enforce default parameters to be last.
+                "@typescript-eslint/func-call-spacing": [
+                    "error"
+                ], // Require or disallow spacing between function identifiers and their invocations.
+                "@typescript-eslint/init-declarations": [
+                    "error"
+                ], // Require or disallow initialization in variable declarations.
+                "@typescript-eslint/no-dupe-class-members": [
+                    "error"
+                ], // Disallow duplicate class members.
+                "@typescript-eslint/no-duplicate-imports": [
+                    "error"
+                ], // Disallow duplicate imports (ni repetido completo ni repetido pero con diferentes elementos).
+                "@typescript-eslint/no-redeclare": [
+                    "error",
+                    {
+                        "ignoreDeclarationMerge": true
+                    }
+                ], // Disallow variable redeclaration.
+                "@typescript-eslint/no-shadow": [
+                    "error"
+                ], // Disallow variable declarations from shadowing variables declared in the outer scope.
+                "@typescript-eslint/no-throw-literal": [
+                    "error"
+                ], // Disallow throwing literals as exceptions.
+                "@typescript-eslint/no-use-before-define": [
+                    "error"
+                ], // Disallow the use of variables before they are defined.
+                "@typescript-eslint/object-curly-spacing": [
+                    "error",
+                    "always"
+                ], // Enforce consistent spacing inside braces.
+                "@typescript-eslint/return-await": [
+                    "error"
+                ], // Enforces consistent returning of awaited values.
+                "@typescript-eslint/space-before-function-paren": [
+                    "error",
+                    "never"
+                ], // Enforces consistent spacing before function parenthesis.
+                "@typescript-eslint/space-infix-ops": [
+                    "error",
+                    {
+                        "int32Hint": false
+                    }
+                ], // This rule is aimed at ensuring there are spaces around infix operators (a + b==>ok | a+ a==>error).
+                // -- Reglas de typescript-eslint que extienden las de eslint ----------
+                // Reglas de eslint-plugin-rxjs: https://github.com/cartant/eslint-plugin-rxjs
+                "rxjs/no-subject-unsubscribe": [
+                    "warn"
+                ]
+            }
+        },
+        {
+            "files": [
+                "*.html"
+            ],
+            "extends": [
+                "plugin:@angular-eslint/template/recommended"
+            ],
+            "rules": {}
+        }
+    ]
+}
+// *1: Regla de @typescript-eslint que extiende la regla de eslint/brace-style por eso requiere deshabilitar la de ESLint.

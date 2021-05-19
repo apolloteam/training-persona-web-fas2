@@ -1,0 +1,200 @@
+<div class="h-full p-4">
+
+    <!-- Barra de progreso. -->
+    <div class="h-1">
+        <mat-progress-bar *ngIf="loading"
+                          class="rounded-t"
+                          color="primary"
+                          mode="indeterminate"></mat-progress-bar>
+    </div>
+
+    <mat-card class="h-full flex flex-col p-0">
+
+        <h2 class="text-2xl p-4">{{'PERSONAS.LIST.TITLE' | translate}}</h2>
+
+        <span *ngIf="loading"
+              class="block px-6 text-sm">
+            {{'PERSONAS.LIST.LOADING' | translate}}
+        </span>
+
+        <div class="overflow-auto flex-1">
+
+            <mat-table *ngIf="(list$ | async).length"
+                       class="w-full pb-16 flex flex-col items-stretch"
+                       multiTemplateDataRows
+                       [dataSource]="list$">
+
+                <!-- CONFIGURACIÓN DE COLUMNAS. -->
+
+                <!-- Estado de la cuenta. -->
+                <ng-container matColumnDef="status">
+                    <mat-cell *matCellDef="let itemPersona"
+                              class="flex-none mr-4">
+                        <div class="w-10 h-10 text-center rounded-full text-xl leading-10"
+                             [class.bg-green-300]="isActiveStatus(itemPersona)"
+                             [class.text-white]="isActiveStatus(itemPersona)"
+                             [class.bg-red-300]="isDeletedStatus(itemPersona)"
+                             [class.bg-yellow-300]="isSuspendedStatus(itemPersona)"
+                             [class.bg-grey-300]="isInactiveStatus(itemPersona)">
+                            {{itemPersona.estado[0]}}</div>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Nombre y email. -->
+                <ng-container matColumnDef="name">
+                    <mat-cell *matCellDef="let itemPersona"
+                              class="flex flex-col text-xs flex-1 w-40 items-start justify-center">
+                        <span>{{itemPersona.nombreCompleto}}</span>
+                        <span>{{itemPersona.eMail}}</span>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Nacionalidad y género. -->
+                <ng-container matColumnDef="extra">
+                    <mat-cell *matCellDef="let itemPersona"
+                              class="flex flex-col flex-none w-24 text-xs items-start justify-center">
+                        <span>{{itemPersona.nacionalidad}}</span>
+                        <span>{{itemPersona.sexo}}</span>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Fecha de nacimiento. -->
+                <ng-container matColumnDef="dateOfBirth">
+                    <mat-cell *matCellDef="let itemPersona"
+                              class="text-xs w-24 flex-none">
+                        {{itemPersona.fechaNacimiento | date : 'dd-MM-YY'}}
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Botones de acciones. -->
+                <ng-container matColumnDef="actions">
+                    <mat-cell class="text-right text-default flex-none"
+                              *matCellDef="let itemPersona">
+                        <button mat-icon-button
+                                (click)="deletePersona($event, itemPersona)">
+                            <mat-icon>delete_forever</mat-icon>
+                        </button>
+                        <button mat-icon-button
+                                (click)="editPersona($event, itemPersona)">
+                            <mat-icon>mode_edit</mat-icon>
+                        </button>
+                        <button mat-icon-button
+                                [matMenuTriggerFor]="itemActionsMenu"
+                                (click)="handleOpenMenuEvent($event);">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #itemActionsMenu
+                                  xPosition="after">
+                            <button (click)="editPersona($event, itemPersona)"
+                                    mat-menu-item>
+                                {{'PERSONAS.LIST.ACTIONS.EDIT' | translate }}
+                            </button>
+                            <button (click)="deletePersona($event, itemPersona)"
+                                    mat-menu-item>
+                                {{'PERSONAS.LIST.ACTIONS.DELETE' | translate }}
+                            </button>
+                            <button (click)="createPersona($event, itemPersona)"
+                                    mat-menu-item>
+                                {{'PERSONAS.LIST.ACTIONS.CREATE' | translate }}
+                            </button>
+                        </mat-menu>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Detalle de la persona. -->
+                <ng-container matColumnDef="detail">
+                    <mat-cell *matCellDef="let itemPersona"
+                              class="px-0 flex flex-row text-xs flex-1">
+
+                        <div class="bg-grey-300 py-4">
+                            <p class="text-indigo-900 ml-6 text-base">{{itemPersona.id}}</p>
+                            <div class="my-2 px-4 py-2 mr-8 rounded-r-lg"
+                                 [ngClass]="{
+                                            'bg-green-300 text-white': isActiveStatus(itemPersona),
+                                            'bg-red-300 text-white ': isDeletedStatus(itemPersona),
+                                            'bg-yellow-300 text-grey-900 ': isSuspendedStatus(itemPersona),
+                                            'bg-grey-300 text-grey-900': isInactiveStatus(itemPersona)}">
+                                {{getStatusText(itemPersona)}}</div>
+                            <p class="text-xl font-semibold text-center">{{ itemPersona.fechaNacimiento | date :
+                                'yyyy'
+                                }}</p>
+                            <p class="text-sm text-center">{{ itemPersona.fechaNacimiento | date : 'dd MMM' }}</p>
+
+                        </div>
+                        <div class="p-4 flex-1">
+                            <div>
+                                <span class="text-grey-500 text-xs">
+                                    {{'PERSONAS.LIST.ITEM.NAME' | translate }}
+                                </span>
+                                <p class="text-sm">
+                                    {{itemPersona.nombreCompleto }}
+                                </p>
+                            </div>
+                            <div class="my-2">
+                                <span class="text-grey-500 text-xs">
+                                    {{'PERSONAS.LIST.ITEM.EMAIL' | translate }}
+                                </span>
+                                <p class="text-sm">
+                                    {{itemPersona.eMail }}
+                                </p>
+                            </div>
+                            <div *ngIf="itemPersona.obs">
+                                <div class="flex flex-row items-center">
+                                    <mat-icon class="text-grey-700 text-base text-center">speaker_notes</mat-icon>
+                                    <span class="text-grey-500 text-xs">
+                                        {{'PERSONAS.LIST.ITEM.OBS' | translate }}
+                                    </span>
+                                </div>
+                                <span class="text-sm italic">
+                                    "{{ itemPersona.obs }}"
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div>
+                                <span class="text-grey-500 text-xs">
+                                    {{'PERSONAS.LIST.ITEM.SAVING' | translate }}
+                                </span>
+                                <div class="flex flex-row">
+                                    <span class="text-sm">
+                                        {{itemPersona.totalAhorro | currency }}
+                                    </span>
+                                    <span class="text-grey-400 text-mini ml-1 -mt-1">(ARS)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Configuración de columnas en cada row. -->
+                <mat-row *matRowDef="let itemPersona; columns: columnsItem"
+                         class="cursor-pointer min-w-min overflow-hidden"
+                         [ngClass]="{'border-0':expandedIdPersona == itemPersona.id}"
+                         (click)="setExpandedDetail(itemPersona.id)">
+                </mat-row>
+
+                <!-- Configuración del detalle en cada row. -->
+                <mat-row *matRowDef="let itemPersona; columns: columnsDetail"
+                         class="expandable-detail border-0 flex min-h-0 w-full max-h-0 overflow-hidden"
+                         [ngClass]="{'max-h-96':expandedIdPersona == itemPersona.id}">
+                </mat-row>
+
+            </mat-table>
+        </div>
+
+        <mat-paginator *ngIf="(list$ | async).length"
+                       [length]="totalItemCount$ | async"
+                       [pageIndex]="(pageIndex$ | async) - 1"
+                       [pageSize]="(pageSize$ | async)"
+                       [pageSizeOptions]="[5, 10, 25, 100]"
+                       (page)="handlePaginatorEvent($event)">
+        </mat-paginator>
+
+        <button mat-fab
+                color="primary"
+                class="absolute right-8 bottom-20"
+                (click)="createPersona($event)">
+            <mat-icon>add</mat-icon>
+        </button>
+    </mat-card>
+</div>

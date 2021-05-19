@@ -1,0 +1,72 @@
+<div class="h-screen flex flex-col justify-center items-center">
+
+    <!-- Logo del brand. -->
+    <img class="w-72 pb-4"
+         src="assets/images/logo-header-negro.svg" />
+
+    <div class="w-full max-w-lg">
+
+        <!-- Barra de progreso. -->
+        <div class="h-1">
+            <mat-progress-bar *ngIf="loading"
+                              class="rounded-t"
+                              color="primary"
+                              mode="indeterminate"></mat-progress-bar>
+        </div>
+
+        <mat-card class="mx-4 my-2">
+            <h4 class="text-lg mb-2">
+                Ingreso al sistema
+            </h4>
+
+            <form [formGroup]="formLogin"
+                  (ngSubmit)="formLogin.valid && !loading && login()">
+
+                <section class="flex flex-col">
+                    <!-- Control de Username. -->
+                    <mat-form-field class="at-form-field">
+                        <mat-label>{{ 'AUTH.LOGIN.USERNAME.LABEL' | translate }}</mat-label>
+                        <input matInput
+                               type="text"
+                               formControlName="username" />
+                        <mat-error *ngIf="formLogin.controls?.username?.invalid">
+                            {{'AUTH.LOGIN.USERNAME.ERROR.REQUIRED' | translate}} </mat-error>
+                    </mat-form-field>
+
+                    <!-- Control de Password. -->
+                    <mat-form-field class="at-form-field">
+                        <mat-label>{{ 'AUTH.LOGIN.PASSWORD.LABEL' | translate }}</mat-label>
+                        <input matInput
+                               formControlName="password"
+                               name="traslada-password"
+                               [type]="revealedPass ? 'text' : 'password'" />
+                        <mat-error *ngIf="formLogin.controls?.password?.invalid">
+                            {{'AUTH.LOGIN.PASSWORD.ERROR.REQUIRED' | translate}} </mat-error>
+                        <button (click)="toogleRevealedPass($event)"
+                                mat-icon-button
+                                matSuffix
+                                type="button"
+                                tabindex="-1"
+                                [attr.aria-label]="'Hide password'"
+                                [attr.aria-pressed]="revealedPass">
+                            <mat-icon>{{revealedPass ? 'visibility' : 'visibility_off' }}
+                            </mat-icon>
+                        </button>
+                    </mat-form-field>
+                </section>
+
+                <!-- Botones del formulario. -->
+                <section class="flex flex-row justify-end">
+
+                    <!-- Botón de login. -->
+                    <button mat-button
+                            color="primary"
+                            type="submit"
+                            mat-raised-button
+                            [disabled]="formLogin.invalid || (loading)">{{ 'AUTH.LOGIN.BTN' |
+                        translate}}</button>
+                </section>
+            </form>
+        </mat-card>
+    </div>
+</div>

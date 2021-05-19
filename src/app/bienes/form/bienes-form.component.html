@@ -1,0 +1,67 @@
+<div>
+    <h4 class="text-lg mb-2">
+        {{'BIENES.FORM.TITLE' | translate}}
+    </h4>
+
+    <form [formGroup]="formBien"
+          (ngSubmit)="formBien.valid && !loading && submit()">
+
+        <!-- Campos del formulario. -->
+        <section class="flex flex-col">
+            <!-- Descripción. -->
+            <mat-form-field class="at-form-field">
+                <mat-label>{{ 'BIENES.FORM.DESCRIPCION.LABEL' | translate }}</mat-label>
+                <input required
+                       matInput
+                       formControlName="descripcion" />
+                <mat-error *ngIf="formBien.controls.tipo.errors?.required">
+                    {{'BIENES.FORM.DESCRIPCION.ERROR.REQUIRED' | translate}} </mat-error>
+            </mat-form-field>
+
+            <div class="flex flex-col tablet:flex-row">
+                <!-- Tipo. -->
+                <mat-form-field class="at-form-field tablet:flex-1 tablet:pr-4">
+                    <mat-label>{{ 'BIENES.FORM.TIPO.LABEL' | translate }}</mat-label>
+                    <mat-select class="w-full"
+                                required
+                                formControlName="tipo">
+                        <mat-option *ngFor="let itemTipo of bienesTypes"
+                                    [value]="itemTipo">{{itemTipo}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formBien.controls.tipo.errors?.required">
+                        {{'BIENES.FORM.TIPO.ERROR.REQUIRED' | translate}} </mat-error>
+                </mat-form-field>
+
+                <!-- Valor. -->
+                <mat-form-field class="at-form-field tablet:flex-1">
+                    <mat-label>{{ 'BIENES.FORM.VALOR.LABEL' | translate }}</mat-label>
+                    <input class="flex-1"
+                           type="number"
+                           required
+                           matInput
+                           formControlName="valor" />
+                    <mat-error *ngIf="formBien.controls.valor.errors?.required">
+                        {{'BIENES.FORM.TIPO.ERROR.REQUIRED' | translate}} </mat-error>
+                </mat-form-field>
+
+            </div>
+        </section>
+
+        <!-- Botones del formulario. -->
+        <section class="flex flex-row justify-end">
+            <button class="mr-4"
+                    mat-button
+                    (click)="closeModal()">
+                {{ 'BIENES.FORM.BTN.CANCEL' | translate }}
+            </button>
+            <button mat-raised-button
+                    color="primary"
+                    type="submit"
+                    [disabled]="formBien.invalid || loading">
+                {{ 'BIENES.FORM.BTN.CREATE' | translate }}
+            </button>
+        </section>
+
+    </form>
+</div>
