@@ -242,7 +242,7 @@ export class PaisesListComponent implements OnInit, OnDestroy {
                 filter(hasChanges => !!hasChanges),
                 tap(() => this.loading = true),
                 switchMap(() => this.store.dispatch(new paisesActions.GetList())),
-                catchError((err: unknown) => {
+                catchError((err: HttpApiError) => {
                     this.loading = false;
                     return this.handleGetListError(err);
                 }),

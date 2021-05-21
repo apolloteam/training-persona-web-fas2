@@ -26,6 +26,7 @@ export class ErrorHandlerService implements ErrorHandler {
      * Realiza el tratamiento genérico del error y muestra un mensaje asociado.
      * @param error Error.
      */
+    /* eslint-disable */
     public handleError(error: any): void {
 
         /** 
@@ -48,13 +49,14 @@ export class ErrorHandlerService implements ErrorHandler {
             this.processException(error);
         }
     }
+    /* eslint-enable */
 
     /**
      * Procesa excepciones y muestra un mensaje.
      * @param err Exception.
      * @returns Confirmación de mensaje.
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    /* eslint-disable */
     public processException(err: any): Promise<void> {
 
         const statusMessage: StatusMessage = err?.error
@@ -68,6 +70,7 @@ export class ErrorHandlerService implements ErrorHandler {
         statusMessage.uiErrorUniqueId = err?.error?.errorUniqueId || this.generateUUID();
         return this.showGeneralError(statusMessage);
     }
+    /* eslint-enable */
 
     /**
      * Procesa y completa información del error recibido.

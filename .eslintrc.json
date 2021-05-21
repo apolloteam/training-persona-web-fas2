@@ -309,7 +309,8 @@
                 // Reglas de eslint-plugin-rxjs: https://github.com/cartant/eslint-plugin-rxjs
                 "rxjs/no-subject-unsubscribe": [
                     "warn"
-                ]
+                ],
+                "rxjs/no-implicit-any-catch": "off"
             }
         },
         {
