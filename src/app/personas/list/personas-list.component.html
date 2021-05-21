@@ -169,14 +169,14 @@
                 <!-- Configuración de columnas en cada row. -->
                 <mat-row *matRowDef="let itemPersona; columns: columnsItem"
                          class="cursor-pointer min-w-min overflow-hidden"
-                         [ngClass]="{'border-0':expandedIdPersona == itemPersona.id}"
+                         [ngClass]="{'border-0':expandedIdPersona === itemPersona.id}"
                          (click)="setExpandedDetail(itemPersona.id)">
                 </mat-row>
 
                 <!-- Configuración del detalle en cada row. -->
                 <mat-row *matRowDef="let itemPersona; columns: columnsDetail"
                          class="expandable-detail border-0 flex min-h-0 w-full max-h-0 overflow-hidden"
-                         [ngClass]="{'max-h-96':expandedIdPersona == itemPersona.id}">
+                         [ngClass]="{'max-h-96':expandedIdPersona === itemPersona.id}">
                 </mat-row>
 
             </mat-table>
