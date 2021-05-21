@@ -2,7 +2,7 @@ const colors = require('material-colors/dist/colors');
 
 module.exports = {
     purge: {
-        enabled: false, // process?.argv?.indexOf("build") !== -1,
+        enabled: process?.argv?.indexOf("build") !== -1,
         content: [
             './src/**/*.{html,ts,scss}',
         ]
