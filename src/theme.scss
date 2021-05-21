@@ -1,18 +1,19 @@
+@use '~@angular/material' as mat;
 @import "material-colors/dist/colors.var.css";
 @import "~@angular/material/theming";
-@include mat-core();
+@include mat.core();
 
-$app-theme: mat-light-theme(
+$app-theme: mat.define-light-theme(
     (
         color: (
-            primary: mat-palette($mat-indigo),
-            accent: mat-palette($mat-green),
-            warn: mat-palette($mat-red),
+            primary: mat.define-palette(mat.$indigo-palette),
+            accent: mat.define-palette(mat.$green-palette),
+            warn: mat.define-palette(mat.$red-palette),
         ),
     )
 );
 
-@include angular-material-theme($app-theme);
+@include mat.all-component-themes($app-theme);
 
 :root {
     --primary: var(--md-indigo-500);
